@@ -1,0 +1,299 @@
+@(content: Html)
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lananu.nu</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")"> 
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.css")"> 
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/changes.css")"> 
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/eventMain.css")">
+        <link rel="shortcut icon" href="@routes.Assets.at("img/icon.png")">
+    </head>
+    <body>
+        
+<!-- NAVBAR ================================================== -->
+    <div class="navbar-wrapper">
+      <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
+      <div class="container">
+	
+
+        <div class="navbar navbar-inverse">
+          <div class="navbar-inner ">
+            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+			
+			@if( !session().isEmpty() ) {
+			<ul class="nav hidden-phone">
+			<li><a href="@routes.Application.index" style="padding-top: 3px; padding-bottom: 0px;"><img src="@routes.Assets.at("img/logotype.png")"></a></li>
+				
+				</ul>
+				
+			<ul class="nav visible-phone">
+			<li><a href="@routes.Application.index">Logotype</a></li>
+				
+				</ul>	
+								
+				
+				<ul class="nav"><li><div class="input-append">
+				<div class="visible-desktop">
+			  	<input onkeyup="wichKey()" class="input-xlarge" id="appendedInputButton" type="text" placeholder="Sök person eller LAN">
+			  	<button onclick="search()" class="btn" type="button"><i class="icon-search"></i></button></input>
+				</div></div></li></ul>
+
+			<ul class="nav hidden-phone">
+			<li><a href="@routes.Events.registerEvent"><i class="icon-plus icon-white"></i> Skapa event</a></li>
+            <li><a href="@routes.Events.list()"><i class="icon-list icon-white"></i> Lista event</a></li>
+				
+				
+				
+				
+				@if(Profile.find.where().eq("username", session().get("username")).findUnique().getQueue() == false){
+					<li><a href="@routes.Queue.queue(session().get("username"))"><i class="icon-play icon-white"></i> Matchmaking</a></li>
+					}
+				@if(Profile.find.where().eq("username", session().get("username")).findUnique().getQueue() == true){
+					<li><a href="@routes.Queue.deQueue(session().get("username"))"><i class="icon-play icon-white"></i> Avbryt matchmaking</a></li>
+					}
+				</ul>
+				
+
+			<ul class="nav pull-right hidden-phone">	
+			<p class="navbar-text pull-right">
+					<a href="@routes.Profiles.profile( session().get("username") )" class="navbar-link">
+					@if(Profile.find.where().eq("username", session().get("username")).findUnique().picture != null){
+						<img src="/assets/images/@Profile.find.where().eq("username", session().get("username")).findUnique().picture" width="25" height="26">
+					} else {
+						<img src="@routes.Assets.at("images/anonymous-person1.jpg")">
+						
+					}
+					@session().get("username")
+					</a>
+					
+							
+							
+				</p>
+				</ul>
+				<!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
+                
+				
+				<ul class="nav pull-right hidden-phone">
+				<li>
+				<a href="@routes.Application.index" class="dropdown-toggle" ><i class="icon-home icon-white"></i></a>
+				<li class="dropdown pull-right">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mitt konto <b class="caret"></b></a>
+                  <ul class="dropdown-menu"  role="menu" aria-labelledby="dLabel">
+							<li><a href="@routes.Profiles.profile(session().get("username"))"><i class="icon-list"></i> Profil</a></li>
+							 <li><a href="@routes.Profiles.editProfile(session().get("username"))"><i class="icon-edit"></i> Redigera profil</a></li>
+                    		<li class="divider"></li>
+                    		<li><a href="@routes.Users.logout"><i class="icon-off"></i> Logga ut</a></li>
+                  </ul>
+				</li></li>
+				</ul>
+				
+			
+			} <!-- End of if -->
+			
+
+           <!--- NAV head for phone -->
+			<div class="span2 visible-phone">
+			<ul class="nav pull-right">
+				<li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-bell icon-white"></i></a>
+                  <ul class="dropdown-menu"  role="menu" aria-labelledby="dLabel">
+                    <li><a href="./newer_shit.htm">Action</a></li>
+                    <li><a href="./newer_shit.htm">Another action</a></li>
+                    <li><a href="./newer_shit.htm">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Nav header</li>
+                    <li><a href="./newer_shit.htm">Separated link</a></li>
+                    <li><a href="./newer_shit.htm">One more separated link</a></li>
+                  </ul>
+				</li>
+				</ul>
+				
+				<ul class="nav pull-right">
+				<li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-envelope icon-white"></i></a>
+                  <ul class="dropdown-menu"  role="menu" aria-labelledby="dLabel">
+                    <li><a href="./newer_shit.htm">Action</a></li>
+                    <li><a href="./newer_shit.htm">Another action</a></li>
+                    <li><a href="./newer_shit.htm">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Nav header</li>
+                    <li><a href="./newer_shit.htm">Separated link</a></li>
+                    <li><a href="./newer_shit.htm">One more separated link</a></li>
+                  </ul>
+				</li>
+				</ul>
+				
+				<ul class="nav pull-right">
+				<li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i></a>
+                  <ul class="dropdown-menu"  role="menu" aria-labelledby="dLabel">
+                    <li><a href="./newer_shit.htm">User wants to add you to their freinds list.</a></li>
+                    <li><a href="./newer_shit.htm">User wants to add you to their freinds list.</a></li>
+                    <li><a href="./newer_shit.htm">User wants to add you to their freinds list.</a></li>
+                    <li class="divider"></li>
+
+                    <li><a href="./newer_shit.htm">Go to your friends list</a></li>
+                    
+                  </ul>
+				</li>
+				</ul>
+			<ul class="nav pull-right">
+				<li class="dropdown">
+                  <a href="./newer_shit.htm" class="dropdown-toggle" ><i class="icon-home icon-white"></i></a>
+				</li>
+				</ul>
+				</div><!---- End NAV Phone--->
+				
+				
+				<!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                
+				
+			<ul class="nav visible-phone">	
+			
+			<ul class="nav"><li><div class="input-append">
+				
+			  <input onkeyup="wichKey()" class="input-medium" id="appendedInputButton" type="text" placeholder="Search people, LAN's and things">
+			  <button class="btn" type="button"><i class="icon-search"></i></input></button>
+			</div></li></ul>
+                
+				<ul class="nav">
+			<li><a href="http://twitter.github.io/bootstrap/examples/carousel.html#"><i class="icon-map-marker icon-white"></i> LAN finder</a></li>
+				
+				</ul>
+				
+				<ul class="nav">
+			<li><a href="http://twitter.github.io/bootstrap/examples/carousel.html#"><i class="icon-play icon-white"></i> Matchmaker</a></li>
+				
+				</ul>
+				
+				<ul class="nav">
+			<li><a href="http://twitter.github.io/bootstrap/examples/carousel.html#"><i class="icon-list-alt icon-white"></i> Profile</a></li>
+				
+				</ul>
+				
+				<ul class="nav">
+			<li><a href="http://twitter.github.io/bootstrap/examples/carousel.html#"><i class="icon-cog icon-white"></i> Settings</a></li>
+				
+				</ul>
+				
+				<ul class="nav">
+			<li><a href="http://twitter.github.io/bootstrap/examples/carousel.html#"><i class="icon-eye-open icon-white"></i> Privacy</a></li>
+				
+				</ul>
+				
+				<ul class="nav">
+			<li><a href="http://twitter.github.io/bootstrap/examples/carousel.html#"><i class="icon-off icon-white"></i> Log out</a></li>
+				
+				</ul>
+				
+				
+				
+				
+				</ul>	
+				
+				
+			  
+            </div><!--/.nav-collapse -->
+				
+				
+				
+			
+			
+          </div><!-- /.navbar-inner -->
+        </div><!-- /.navbar -->
+	
+      </div> <!-- /.container -->
+    </div><!-- /.navbar-wrapper -->
+        
+        
+	<!-- CONTAINER ================================================== -->
+	
+	
+	<div class="container style="margin-top: 40px">
+	<div class="row";">
+	
+	
+	<div class="span2">
+              <ul class="nav nav-list">
+                @if( !session().isEmpty() ){
+                
+                <li><a href="@routes.Application.index()">Twitter-feed</a></li>
+				<li class="divider"></li>
+				<li class="nav-header">Event</li>
+				@for( e <- User.find.byId(session().get("username")).events){
+					<li><a href=@routes.Events.showEvent(e.host)>@e.name</a>
+				
+				}
+				
+				
+				}
+              </ul>
+            </div>
+	
+	
+	
+      <div class="span7" style="margin-left: 0px;">
+	  
+
+            @content 
+        
+ 
+      </div>
+      
+      @if( !session().isEmpty() ) {
+	  <div class="span3">	  
+	  <img src="@routes.Assets.at("images/horse.gif")"> <br> <br>
+		
+	 <br>
+	 <hr>
+	 <br>
+	  </div>
+	  }
+	  
+
+      
+
+      
+	</div> <!-- /row -->
+	
+	<hr>
+	<div class="footer" style="margin-right: 20px;"><center>
+        <p>Lanmatchmaker 2000 © 2013</p>
+        </center>
+      </div>
+	
+    </div> <!-- /container -->
+        <script>
+        	function wichKey(){
+        	if(event.keyCode == 13){
+        	search();
+        	}
+        	
+        	
+        	}
+            function search(){
+                var searchString = document.getElementById("appendedInputButton").value;
+               window.location.href = "../../../../../../search?searchQuery="+searchString;
+
+            }
+            
+           
+        </script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.js")" </script>        
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/bootstrap.min.js")"  </script>        
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/bootstrap-dropdown.js")"  </script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/bootstrap-button.js")"  </script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/bootstrap-tab.js")"  </script>
+        <script type="text/javascript" src="@routes.Application.javascriptRoutes"> </script>
+        
+    </body>
+</html>

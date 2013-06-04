@@ -1,0 +1,25 @@
+@(streamUserform: Form[Stream.streamUser])
+
+@import helper._
+
+@main {
+    
+	<h2>Enter the twitch username:</h2>
+    
+		@form(action = routes.Stream.stream, args = 'id -> "streamform") {
+        
+        @inputText(
+            field = streamUserform("streamUsername"),
+            args = '_label -> "Username", 'placeholder -> "Anonymous"
+        )
+        
+        
+        <p class="buttons">
+            <input type="submit">
+        <p>
+		
+		
+	}
+ 
+    
+}

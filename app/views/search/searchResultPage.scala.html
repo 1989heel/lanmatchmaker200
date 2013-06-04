@@ -1,0 +1,193 @@
+@(eventPage: com.avaje.ebean.Page[Event], eventSortBy: String, eventOrder: String, userPage: com.avaje.ebean.Page[User], userSortBy: String, userOrder: String, searchString: String)
+
+@link(newPage:Int, newEventSortBy:String, newUserSortBy:String) = @{
+	
+	var eventsortBy = eventSortBy
+	var eventorder = eventOrder
+	
+	if(newEventSortBy != null) {
+		eventsortBy = newEventSortBy
+		if(eventSortBy == newEventSortBy) {
+			if(eventOrder == "asc") {
+				eventorder = "desc"
+			} else {
+				eventorder = "asc"
+			}
+		} else {
+			eventorder = "asc"
+		}
+	}
+	
+	var usersortBy = userSortBy
+	var userorder = userOrder
+	
+	if(newUserSortBy != null) {
+		usersortBy = newUserSortBy
+		if(userSortBy == newUserSortBy) {
+			if(userOrder == "asc") {
+				userorder = "desc"
+			} else {
+				userorder = "asc"
+			}
+		} else {
+			userorder = "asc"
+		}
+	}
+	
+	// Generate the link
+	routes.Search.searchList(newPage, eventsortBy, eventorder, usersortBy, userorder, searchString)
+
+}
+
+@header(key:String, title:String) = {
+	<th class="@key.replace(".","_") header @if(eventSortBy == key) @{if(eventOrder == "asc") "headerSortDown" else "headerSortUp"}">
+		<a href="@link(0, key, null)">@title</a>
+	</th>
+}
+@header2(key:String, title:String) = {
+	<th class="@key.replace(".","_") header @if(userSortBy == key) @{if(userOrder == "asc") "headerSortDown" else "headerSortUp"}">
+		<a href="@link(0, null, key)">@title</a>
+	</th>
+}
+
+@main {
+
+	<h4 id="homeTitle">@Messages("Sökresultat för event:", eventPage.getTotalRowCount)</h4>
+	
+	@if(flash.containsKey("success")) {
+	<div class="alert-message warning">
+	    <strong>Done!</strong> @flash.get("success")
+	</div>
+
+	}
+	
+	
+	@if(eventPage.getTotalRowCount == 0) {
+	
+	<div class="well">
+	    <em>Inga sökresultat funna.</em>
+	</div>
+	
+	} else {
+		<table class="table table-condensed">
+            <thead>
+                <tr>
+                    @header("name", "Namn")
+                    @header("location", "Plats")
+                    @header("fee", "Avgift")
+                    @header("start", "Börjar")
+                    @header("end", "Slutar")
+                </tr>
+            </thead>
+            <tbody>
+
+                @for(event <- eventPage.getList) {
+                    <tr>
+                        <td><a href="@routes.Events.showEvent(event.host)">@event.name</a></td>
+                        <td>@event.location</td>
+                        <td>@event.fee</td>
+                        <td>
+                            @if(event.start == null) {
+                                <em>Ej angivet</em>
+                            } else {
+                                @event.start.format("dd MMM yyyy")
+                            }
+                        </td>
+                        <td>
+                            @if(event.end == null) {
+                                <em>Ej angivet</em>
+                            } else {
+                                @event.end.format("dd MMM yyyy")
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    <div id="pagination" class="pagination">
+        <ul>
+            @if(eventPage.hasPrev) {
+            <li class="prev">
+                <a href="@link(eventPage.getPageIndex - 1, null, userSortBy)">&larr; Föregående</a>
+            </li>
+            } else {
+            <li class="prev disabled">
+                <a>&larr; Föregående</a>
+            </li>
+            }
+            <li class="current">
+                <a>Visar @eventPage.getDisplayXtoYofZ(" till "," av ")</a>
+            </li>
+            @if(eventPage.hasNext) {
+            <li class="next">
+                <a href="@link(eventPage.getPageIndex + 1, null, userSortBy)">Nästa &rarr;</a>
+            </li>
+            } else {
+            <li class="next disabled">
+                <a>Nästa &rarr;</a>
+            </li>
+            }
+        </ul>
+    </div>
+
+	}
+<br></br>
+	<h4 id="homeTitle">@Messages("Sökresultat för användare:", userPage.getTotalRowCount)</h4>
+	
+
+	
+	
+	@if(userPage.getTotalRowCount == 0) {
+	
+	<div class="well">
+	    <em>Inga sökresultat funna.</em>
+	</div>
+	
+	} else {
+	
+	<table class="table table-condensed">
+	    <thead>
+	    	<tr>
+	        	@header2("username", "Användarnamn")
+	    	</tr>
+	   	</thead>
+	    <tbody>
+	
+	    @for(user <- userPage.getList) {
+		    <tr>
+		        <td><a href="@routes.Profiles.profile(user.username)">@user.username</a></td>
+		    </tr>
+	    }
+	
+	    </tbody>
+	</table>
+	
+	<div id="pagination" class="pagination">
+	    <ul>
+	        @if(userPage.hasPrev) {
+	        <li class="prev">
+	            <a href="@link(userPage.getPageIndex - 1, eventSortBy, null)">&larr; Föregående</a>
+	        </li>
+	        } else {
+	        <li class="prev disabled">
+	            <a>&larr; Föregående</a>
+	        </li>
+	        }
+	        <li class="current">
+	            <a>Visar @userPage.getDisplayXtoYofZ(" till "," av ")</a>
+	        </li>
+	        @if(userPage.hasNext) {
+	        <li class="next">
+	            <a href="@link(userPage.getPageIndex + 1, eventSortBy, null)">Nästa &rarr;</a>
+	        </li>
+	        } else {
+	        <li class="next disabled">
+	            <a>Nästa &rarr;</a>
+	        </li>
+	        }
+	    </ul>
+	</div>
+	}
+}

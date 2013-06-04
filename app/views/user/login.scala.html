@@ -1,0 +1,30 @@
+@(loginForm: Form[Users.Login])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+
+<h1>Logga in</h1>
+
+@form(routes.Users.authenticate()) {
+    
+    <fieldset>
+    
+        @inputText(loginForm("username"), '_label -> " ", 'placeholder -> "Användarnamn")
+		@inputPassword(loginForm("password"), '_label -> " ", 'placeholder -> "Lösenord")
+
+    </fieldset>
+    
+    @if(loginForm.hasGlobalErrors) {
+    	<p class="error">@loginForm.globalError.message</p>
+    }
+        
+    @if(flash.contains("success")) {
+    	<p class="success">@flash.get("success")</p>
+    }
+    
+    <div class="actions">
+        <input type="submit" value="Logga in" class="btn btn-inverse"> 
+    </div>
+    
+}

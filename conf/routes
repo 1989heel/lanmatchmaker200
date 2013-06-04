@@ -1,0 +1,105 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           	controllers.Application.index()
+
+# Login
+GET		/login							controllers.Users.login()
+POST	/login							controllers.Users.authenticate()
+
+# Logout
+GET		/logout							controllers.Users.logout()
+
+# Register user
+GET     /register                     	controllers.Users.register()
+POST	/register						controllers.Users.validateRegistration()
+
+# Register event
+
+GET		/registerEvent					controllers.Events.registerEvent()
+POST	/registerEvent					controllers.Events.validateEventRegistration()
+
+# List events
+GET		/eventz/list					controllers.Events.list(p:Int ?= 0, s ?= "name", o ?= "asc")
+GET		/eventx/listAll					controllers.Events.listAll(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+
+# Lists the events an user are in
+GET     /events/user/:username          controllers.Events.showUsersEvents(username: String)
+
+# simple event joining:
+GET     /events/join                    controllers.Events.showSimpleAddUserToEvent()
+
+# add User to Event
+POST     /events/join                   controllers.Events.addUserToEvent()
+
+# Experimental event joining
+GET		/events/joinz					controllers.Events.joinEvent(id: Long)
+GET		/events/exit					controllers.Events.exitEvent(id: Long)
+
+# show Event profile
+GET     /events/profile                 controllers.Events.showEvent(event: Long)
+
+# show Event page
+GET 	/event							controllers.Events.viewEvent(id: Long)
+
+# Edit event
+
+GET     /events/:id              		controllers.Events.editEvent(id:Long)
+POST    /events/:id              		controllers.Events.updateEvent(id:Long)
+
+# Bandaid matchmaker
+GET		/ragglefraggle					controllers.Queue.queue(id: String)
+GET		/riggleriggle					controllers.Queue.deQueue(id: String)
+
+
+# Matchmaker
+GET		/matchmaker/:id					controllers.Matchmakers.item(id: Long)
+GET		/matchmaker						controllers.Matchmakers.list()	
+GET		/matchmaker/:id/:userName		controllers.Matchmakers.addUser(id: Long, userName: String)
+GET  	/matchmake/:id					controllers.Matchmakers.matchmake(id: Long)
+GET		/matchmakeyo					controllers.Matchmakers.matchmakeyo()
+GET		/matchmakerclear				controllers.Matchmakers.clear()
+GET		/matchmakechat/:id				controllers.Matchmakers.chat(id: Long)
+
+# Chat
+GET     /chat                       	controllers.Chat.error()
+GET     /chat/room                  	controllers.Chat.chatRoom(eventid: Long ?= 666)
+GET     /chat/room/chat             	controllers.Chat.chat(username, eventid : Long)
+
+# Users
+GET		/users							controllers.Users.list()
+
+# Stream
+GET     /stream	                    	controllers.Stream.stream()
+GET     /streamInput	            	controllers.Stream.streamInput()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               	controllers.Assets.at(path="/public", file)
+GET     /assets/javascripts/routes		controllers.Application.javascriptRoutes()
+
+# Upload
+POST    /upload         				controllers.Upload.upload()
+GET 	/imageUpload					controllers.Upload.imageUpload()
+GET		/imageUploadEvent				controllers.Events.imageUpload(id:Long)
+POST    /uploadImage         			controllers.Upload.uploadEvent(id:Long)
+
+# Profile
+GET     /profile                       controllers.Profiles.profile(username: String)
+GET     /profile/edit                  controllers.Profiles.editProfile(username: String)
+POST    /profile                       controllers.Profiles.saveProfile()
+
+# Follows
+GET		/follows/add					controllers.Follows.follow(follower: String, followed: String)
+GET		/follows/remove					controllers.Follows.unFollow(follower: String, followed: String)
+
+POST	/follows/add					controllers.Follows.follow(follower: String, followed: String)
+POST	/follows/remove					controllers.Follows.unFollow(follower: String, followed: String)
+
+# Friend Request
+GET     /sendFriendRequest              controllers.Users.sendFriendRequest(sender: String, receiver: String)
+
+# Search
+GET     /search                         controllers.Search.search(searchQuery: String)
+GET		/searchresult					controllers.Search.searchList(page:Int ?= 0, eventSort ?= "name", eventOrder ?= "asc", userSort ?= "username", userOrder ?="asc", searchQuery ?= "")

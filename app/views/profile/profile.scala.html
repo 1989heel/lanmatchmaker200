@@ -1,0 +1,96 @@
+@(profil: Profile)
+
+@main{
+	<div class="row" style="margin-left: -30px;"> <!--Header-->
+		<div class="span7" style="padding-top: 20px; padding-bottom: 20px; padding-right: 10px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+		background-image:-moz-linear-gradient(top,rgb(93, 56, 134),rgb(48, 0, 121));
+		background-image:-webkit-gradient(linear,0 0,0 100%,from(rgb(93, 56, 134)),to (rgb(48, 0, 121)));
+		background-image:-webkit-linear-gradient(top,rgb(93, 56, 134),rgb(48, 0, 121));
+		background-image:-o-linear-gradient(top,rgb(93, 56, 134),rgb(48, 0, 121));
+		background-image:linear-gradient(to bottom,rgb(93, 56, 134),rgb(48, 0, 121));">
+			<div class="span2" style="margin-right: -22px; margin-left: 20px;">
+				<img class="img-polaroid" src="/assets/images/@profil.picture" width="150" height="100">
+				
+				<br>
+				@if(session().get("username") == profil.username) {
+					<center><a href="@routes.Upload.imageUpload()" style="color: rgb(148, 130, 185); margin-left: -10px;">Ladda upp profilbild</a></center>
+				}
+			</div>
+
+			<div class="span3">
+				<br><br>
+				<h3 style="line-height: 10px; color: #fff;">@profil.username</h3>
+				<h5 style="line-height: 10px; color: #fff;"></br>
+				@profil.sex
+				@if(profil.age != 0){
+					@profil.age			
+				}		
+				@if(!profil.residence.equals("") && profil.age != 0 || !profil.residence.equals("") && !profil.sex.equals("")){
+					- 
+				}
+				@profil.residence
+				</h5>
+				<br>
+				<p style="color: #fff;">@profil.signature</p>
+			</div>
+			
+			@if(profil.username == session().get("username")) {
+				<div class="span2" style="float: right; margin-right: -40px;">
+        			<a href="@routes.Profiles.editProfile(session().get("username"))" class="btn"> Redigera profil</a>
+        		</div>
+		    } else {
+		    	@if(Follows.contains(session().get("username"), profil)) {
+		    		<div class="span2" style="float: right; margin-right: -10px;">
+		   				<a href="@routes.Follows.unFollow(session().get("username"), profil.username)" class="btn">Sluta följa @profil.username</a>
+		   			</div>
+		   		} else {
+		    		<div class="span2" style="float: right; margin-right: -10px;">
+		   				<a href="@routes.Follows.follow(session().get("username"), profil.username)" class="btn">Följ @profil.username</a>
+		   			</div>
+			   	}
+		   	}
+		</div>
+	</div>
+	
+	<div class="span7" style="margin-left: 10px; margin-top: 10px;"> <!--Body-->
+		<div class="span2" style="margin-left: -40px;"> <!--Left part of the body-->
+			<div class="span2" style="border: 1px solid #ddd; padding-left: 15px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;"> <!--Games field-->
+				<h5>Spelar: </h5> 
+					@for(games <- profil.game){
+						<i class="icon-asterisk"></i>@games.title <br>
+					}
+				<br>
+			</div>
+			<br>
+			<div class="span2" style="border: 1px solid #ddd; margin-top: 10px; padding-left: 15px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;"> <!--Friends field-->
+				<h5>Följer </h5>
+				<ul class ="thumbnails" style="padding-left: 20px;">
+					@for(follow <- profil.follows) {
+						<li class ="thumbnails" style="margin-bottom: 5px; margin-left: 5px;">
+							<a href="@routes.Profiles.profile(follow.followed.username)" class="thumbnail">
+								<img data-src="holder.js/50X50" alt="" style="width: 50px; height: 50px;" src="@routes.Assets.at("img/140x140.png")">
+							</a>
+						</li>
+					}
+				</ul>
+			</div>
+		</div>
+		
+		<div class="span5" style="margin-left: 25px;"> <!--Right part of the body-->
+			<div class="span5" style="margin-right: -30px; padding-left: 15px; border: 1px solid #ddd; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; padding-right: -50px;">
+				<h5>Om mig</h5>
+				<p>@profil.about</p>
+				<br>
+			</div>
+		
+			<div class="span5" style="margin-right: -30px; margin-top: 10px; padding-left: 15px; border: 1px solid #ddd; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; padding-right: -50px;">
+				<h5>Lan</h5>
+				@for( e <- User.find.byId(profil.username).events){
+					<a href=@routes.Events.showEvent(e.host)>@e.name</a><br>				
+				}
+				<br>
+			</div>
+		</div>
+	</div>
+
+}

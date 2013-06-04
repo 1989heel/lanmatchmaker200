@@ -1,0 +1,11 @@
+@(matchmakers: List[Matchmaker], notAddedUsers: Set[Profile])
+
+<ul>
+
+@matchmakers.map { matchmaker =>
+		<li>
+		@views.html.matchmaker.item.render(matchmaker, notAddedUsers)
+		</li>
+	
+}
+</ul>

@@ -1,0 +1,9 @@
+@(matchmaker: Matchmaker)
+
+@main {
+	@matchmaker.getType()
+	@matchmaker.value
+
+    <iframe src=@routes.Chat.chatRoom(-matchmaker.id) height="310"
+            width="100%" style="border: 1px solid #3f3f3f;" scrolling="no"> </iframe>
+}

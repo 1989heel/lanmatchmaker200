@@ -1,0 +1,12 @@
+@(matchmaker: Matchmaker, users: Set[Profile])
+
+<ul>
+@if(users != null) {
+	@users.map { user =>
+		<li>
+			@user.username
+			<a href="@routes.Matchmakers.addUser(matchmaker.getId(), user.username)">add</a>
+		</li>
+	}
+}
+</ul>

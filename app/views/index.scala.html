@@ -1,0 +1,22 @@
+@(login: Html, register: Html)
+
+@main {
+	<div class="span12" style="margin-left: -90px;">
+		<div class="row" style="margin-left: -155px;">
+			<div class="span3" style="padding-left: 50px; width: 294px;">
+				@login
+			</div>
+			<div class="span6" style="margin-left: 90px; margin-top: 80px;">
+	     		<img src="@routes.Assets.at("img/logotype_startpage.png")">
+	     	</div>
+	
+			</div>
+		</div>		
+		
+		<div class="span6" style="text-align: center; margin-left: 115px;">
+			<br><br><br>
+			<hr>
+			@register
+		</div>
+	</div>
+}

@@ -1,0 +1,233 @@
+@(profilForm: Form[Profile])
+@import helper._
+
+
+@main {
+
+
+<div style="float:left;">
+@form(action = routes.Profiles.saveProfile, args = 'id -> "editProfile") {
+
+@select(
+            field = profilForm("residence"), 
+            options = options(
+            	"" -> "Välj stad",
+                "Alingsås" -> "Alingsås",
+"Arboga" -> "Arboga",
+"Arvika" -> "Arvika",
+"Askersund" -> "Askersund",
+"Avaskär" -> "Avaskär",
+"Avesta" -> "Avesta",
+"Boden" -> "Boden",
+"Bollnäs" -> "Bollnäs",
+"Borgholm" -> "Borgholm",
+"Borlänge" -> "Borlänge",
+"Borås" -> "Borås",
+"Broo" -> "Broo",
+"Brätte" -> "Brätte",
+"Båstad" -> "Båstad",
+"Djursholm" -> "Djursholm",
+"Eksjö" -> "Eksjö",
+"Elleholm" -> "Elleholm",
+"Enköping" -> "Enköping",
+"Eskilstuna" -> "Eskilstuna",
+"Eslöv" -> "Eslöv",
+"Fagersta" -> "Fagersta",
+"Falkenberg" -> "Falkenberg",
+"Falköping" -> "Falköping",
+"Falsterbo" -> "Falsterbo",
+"Falun" -> "Falun",
+"Filipstad" -> "Filipstad",
+"Flen" -> "Flen",
+"Gränna" -> "Gränna",
+"Gävle" -> "Gävle",
+"Göteborg" -> "Göteborg",
+"Hagfors" -> "Hagfors",
+"Halmstad" -> "Halmstad",
+"Haparanda" -> "Haparanda",
+"Hedemora" -> "Hedemora",
+"Helsingborg" -> "Helsingborg",
+"Hjo" -> "Hjo",
+"Hudiksvall" -> "Hudiksvall",
+"Huskvarna" -> "Huskvarna",
+"Härnösand" -> "Härnösand",
+"Hässleholm" -> "Hässleholm",
+"Höganäs" -> "Höganäs",
+"Järle" -> "Järle",
+"Jönköping" -> "Jönköping",
+"Kalmar" -> "Kalmar",
+"Karlshamn" -> "Karlshamn",
+"Karlskoga" -> "Karlskoga",
+"Karlskrona" -> "Karlskrona",
+"Karlstad" -> "Karlstad",
+"Katrineholm" -> "Katrineholm",
+"Kiruna" -> "Kiruna",
+"Kongahälla" -> "Kongahälla",
+"Kramfors" -> "Kramfors",
+"Kristianopel" -> "Kristianopel",
+"Kristianstad" -> "Kristianstad",
+"Kristinehamn" -> "Kristinehamn",
+"Kumla" -> "Kumla",
+"Kungsbacka" -> "Kungsbacka",
+"Kungälv" -> "Kungälv",
+"Köping" -> "Köping",
+"Laholm" -> "Laholm",
+"Landskrona" -> "Landskrona",
+"Lidingö" -> "Lidingö",
+"Lidköping" -> "Lidköping",
+"Lindesberg" -> "Lindesberg",
+"Linköping" -> "Linköping",
+"Ljungby" -> "Ljungby",
+"Lomma" -> "Lomma",
+"Ludvika" -> "Ludvika",
+"Luleå" -> "Luleå",
+"Lund" -> "Lund",
+"Luntertun" -> "Luntertun",
+"Lycksele" -> "Lycksele",
+"Lyckå" -> "Lyckå",
+"Lysekil" -> "Lysekil",
+"Lödöse" -> "Lödöse",
+"Malmö" -> "Malmö",
+"Mariefred" -> "Mariefred",
+"Mariestad" -> "Mariestad",
+"Marstrand" -> "Marstrand",
+"Mjölby" -> "Mjölby",
+"Motala" -> "Motala",
+"Mölndal" -> "Mölndal",
+"Mönsterås" -> "Mönsterås",
+"Nacka" -> "Nacka",
+"Nora" -> "Nora",
+"Norrköping" -> "Norrköping",
+"Norrtälje" -> "Norrtälje",
+"Nybro" -> "Nybro",
+"Nyköping" -> "Nyköping",
+"Nynäshamn" -> "Nynäshamn",
+"Nässjö" -> "Nässjö",
+"Lidköping" -> "Lidköping",
+"Oskarshamn" -> "Oskarshamn",
+"Oxelösund" -> "Oxelösund",
+"Piteå" -> "Piteå",
+"Ronneby" -> "Ronneby",
+"Sala" -> "Sala",
+"Sandviken" -> "Sandviken",
+"Sigtuna" -> "Sigtuna",
+"Simrishamn" -> "Simrishamn",
+"Skanör" -> "Skanör",
+"Skara" -> "Skara",
+"Skellefteå" -> "Skellefteå",
+"Skänninge" -> "Skänninge",
+"Skövde" -> "Skövde",
+"Sollefteå" -> "Sollefteå",
+"Solna" -> "Solna",
+"Stockholm" -> "Stockholm",
+"Strängnäs" -> "Strängnäs",
+"Strömstad" -> "Strömstad",
+"Sundbyberg" -> "Sundbyberg",
+"Sundsvall" -> "Sundsvall",
+"Säffle" -> "Säffle",
+"Säter" -> "Säter",
+"Sävsjö" -> "Sävsjö",
+"Söderhamn" -> "Söderhamn",
+"Söderköping" -> "Söderköping",
+"Södertälje" -> "Södertälje",
+"Sölvesborg" -> "Sölvesborg",
+"Tidaholm" -> "Tidaholm",
+"Tommarp" -> "Tommarp",
+"Torget" -> "Torget",
+"Torshälla" -> "Torshälla",
+"Tranås" -> "Tranås",
+"Trelleborg" -> "Trelleborg",
+"Trollhättan" -> "Trollhättan",
+"Trosa" -> "Trosa",
+"Uddevalla" -> "Uddevalla",
+"Ulricehamn" -> "Ulricehamn",
+"Umeå" -> "Umeå",
+"Uppsala" -> "Uppsala",
+"Vadstena" -> "Vadstena",
+"Varberg" -> "Varberg",
+"Vaxholm" -> "Vaxholm",
+"Vetlanda" -> "Vetlanda",
+"Vimmerby" -> "Vimmerby",
+"Visby" -> "Visby",
+"Vä" -> "Vä",
+"Vänersborg" -> "Vänersborg",
+"Värnamo" -> "Värnamo",
+"Västervik" -> "Västervik",
+"Västerås" -> "Västerås",
+"Växjö" -> "Växjö",
+"Ystad" -> "Ystad",
+"Åhus" -> "Åhus",
+"Åmål" -> "Åmål",
+"Älvsborg" -> "Älvsborg",
+"Ängelholm" -> "Ängelholm",
+"Örebro" -> "Örebro",
+"Öregrund" -> "Öregrund",
+"Örnsköldsvik" -> "Örnsköldsvik",
+"Östersund" -> "Östersund",
+"Östhammar" -> "Östhammar"
+            ),
+            args = '_label -> "Stad"
+        )		
+
+
+@inputText(
+field = profilForm("age"),
+args = '_label -> "Ålder", 'placeholder -> "t.ex. 20"
+)
+
+@select(
+            field = profilForm("sex"), 
+            options = options(
+                "" -> "Välj kön",
+                "Man" -> "Man",
+                "Kvinna" -> "Kvinna"
+            ),
+            args = '_label -> "Kön"
+        )
+
+@inputText(
+field = profilForm("signature"),
+args = '_label -> "Signatur", 'placeholder -> "Har du ett motto?"
+)	
+
+<p class="buttons">
+    <input type="submit" value="Uppdatera profil" class="btn primary"> eller 
+            <a href="@routes.Profiles.profile(session().get("username"))" class="btn warning">Avbryt</a> 
+<p>
+</div>	
+<div style="float: right; margin-right: 80px;">
+@select(
+            field = profilForm("games"), 
+            options = options(
+            	"" -> "Välj ett spel",
+                "Starcraft 1" -> "Starcraft 1",
+                "Starcraft 2, Wings of Liberty" -> "Starcraft 2, Wings of Liberty",
+				"Starcraft 2, Heart of the Swarm" -> "Starcraft 2, Heart of the Swarm",
+				"Warcraft 1" -> "Warcraft 1",
+				"Warcraft 2" -> "Warcraft 2",
+				"Warcraft 3" -> "Warcraft 3",
+				"World of Warcraft" -> "World of Warcraft",
+				"Diablo 2" -> "Diablo 2",
+				"Diablo 2, Lord of Destruction" -> "Diablo 2, Lord of Destruction",
+				"Diablo 3" -> "Diablo 3",
+				"DotA" -> "DotA",
+				"DotA 2" -> "DotA 2",
+				"LoL" -> "LoL",
+				"CoD" -> "CoD",
+				"My Little Pony" -> "My Little Pony"
+            ),
+            args = '_label -> "Spel jag aktivt spelar"
+        )		
+
+		
+		
+@textarea(profilForm("about"), '_label -> "Om mig", 'placeholder -> "Lägg till information")
+</div>
+
+
+
+
+    }
+
+
+    }

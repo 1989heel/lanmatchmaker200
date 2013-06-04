@@ -1,0 +1,16 @@
+[info] Compiling 39 Scala sources and 27 Java sources to M:\workpace\Project Code\Williams experimentella version\lanmatchmaker2000\target\scala-2.10\classes...
+[warn] M:\workpace\Project Code\Williams experimentella version\lanmatchmaker2000\conf\routes:98: unreachable code
+[warn] POST	/follows/remove					controllers.Follows.unFollow(follower: String, followed: String)
+[warn] M:\workpace\Project Code\Williams experimentella version\lanmatchmaker2000\conf\routes:97: unreachable code
+[warn] POST	/follows/add					controllers.Follows.follow(follower: String, followed: String)
+[warn] M:\workpace\Project Code\Williams experimentella version\lanmatchmaker2000\app\views\event\viewEvent.scala.html:33: method toLocaleString in class Date is deprecated: see corresponding Javadoc for more information.
+[warn] 					Start: @if(event.start != null){@event.start.toLocaleString} else { obestämt }
+[warn] 					                                             ^
+[warn] M:\workpace\Project Code\Williams experimentella version\lanmatchmaker2000\app\views\event\viewEvent.scala.html:35: method toLocaleString in class Date is deprecated: see corresponding Javadoc for more information.
+[warn]                     Slut: @if(event.end != null){@event.end.toLocaleString} else { obestämt }
+[warn]                                                             ^
+[warn] four warnings found
+[warn] Note: Some input files use or override a deprecated API.
+[warn] Note: Recompile with -Xlint:deprecation for details.
+[warn] Note: M:\workpace\Project Code\Williams experimentella version\lanmatchmaker2000\app\models\Matchmaker.java uses unchecked or unsafe operations.
+[warn] Note: Recompile with -Xlint:unchecked for details.

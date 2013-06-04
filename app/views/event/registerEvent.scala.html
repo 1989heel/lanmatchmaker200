@@ -1,0 +1,32 @@
+@(eventForm: Form[Event])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+
+@main {
+    
+    <h1>Skapa ditt event</h1>
+    
+    @form(routes.Events.validateEventRegistration()) {
+        
+        <fieldset>        
+            
+			@inputText(eventForm("name"), '_showConstraints -> false, '_label -> "Namn på eventet", 'placeholder -> "t.ex. Lan1")
+			@inputText(eventForm("location"), '_label -> "Plats", 'placeholder -> "Vart eventet kommer hållas")
+			@inputText(eventForm("fee"), '_label -> "Kostnad", 'placeholder -> "t.ex. 100 kr")
+			@inputText(eventForm("streamUsername"), '_label -> "Stream", 'placeholder -> "Användarnamn på twitch.tv")
+            @inputText(eventForm("start"), '_label -> "Startdatum", 'placeholder -> "YYYY-MM-DD")
+            @inputText(eventForm("end"), '_label -> "Slutdatum", 'placeholder -> "YYYY-MM-DD")
+			@textarea(eventForm("info"), '_label -> "Om eventet", 'placeholder -> "Lägg till information")
+
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Skapa eventet!" class="btn primary"> eller 
+            <a href="@routes.Application.index()" class="btn warning">Avbryt</a>
+        </div>
+        
+    }
+    
+}

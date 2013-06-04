@@ -1,0 +1,30 @@
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+@import helper._
+
+@tempLogin(loginForm: Form[Users.Login]) = {
+	<h1>Welcome. Please, log in.</h1>
+    
+    @form(routes.Users.authenticate()) {
+        
+        <fieldset>
+        
+            @inputText(loginForm("userName"), '_label -> "Username")
+			@inputPassword(loginForm("password"), '_label -> "Password")
+
+        </fieldset>
+        
+        @if(loginForm.hasGlobalErrors) {
+        	<p class="error">@loginForm.globalError.message</p>
+        }
+            
+        @if(flash.contains("success")) {
+        	<p class="success">@flash.get("success")</p>
+        }
+        
+        <div class="actions">
+            <input type="submit" value="Login" class="btn primary"> 
+        </div>
+        
+    }
+}

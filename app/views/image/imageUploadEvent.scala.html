@@ -1,0 +1,20 @@
+@(id:Long)
+@import helper._
+
+@main {
+    <h1>Ladda upp en bild för eventet</h1>
+		
+ @form(action = routes.Upload.uploadEvent(id:Long), 'enctype -> "multipart/form-data") {
+    
+    <input type="file" name="picture">
+    
+	
+	
+    <p>
+        <input type="submit" value="Ladda upp" class="btn primary"> eller 
+            <a href="@routes.Events.viewEvent(id)" class="btn primary">Avbryt</a> 
+    </p>
+    
+}
+    
+}

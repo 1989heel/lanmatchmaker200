@@ -1,0 +1,10 @@
+@(events: List[Event])
+
+<html>
+<ul>
+    @for(e <- events){
+    <li> <a href=" @routes.Events.showEvent(e.host)">@e.host</a></li>
+    }
+</ul>
+
+</html>

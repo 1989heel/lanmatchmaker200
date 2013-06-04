@@ -1,0 +1,35 @@
+@(userForm: Form[User])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+
+
+<br>
+<h1>Gå med idag. Det är gratis!</h1>
+
+@if(flash.contains("error")) {
+	<p class="error">@flash.get("error")</p>
+}
+@if(flash.contains("successRegister")){
+	<p class="success">@flash.get("successRegister")</p>
+}
+
+@form(routes.Users.validateRegistration()) {
+
+    <fieldset>
+    
+        @inputText(userForm("username"), '_label -> " ", '_showConstraints -> false, 'placeholder -> "Användarnamn")
+        @inputText(userForm("email"), '_label -> " ", '_showConstraints -> false, 'placeholder -> "Email")
+        @inputPassword(userForm("password"), '_label -> " ", '_showConstraints -> false, 'placeholder -> "Lösenord")
+        
+    </fieldset>
+	
+	
+    
+    <div class="actions">
+        <input type="submit" value="Skapa konto" class="btn btn-large btn-inverse">
+    </div>
+    <br>
+
+}

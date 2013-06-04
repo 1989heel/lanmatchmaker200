@@ -1,0 +1,28 @@
+@(userForm: Form[Events.UserEventPair])
+
+@import helper._
+
+@main {
+
+
+@form(action = routes.Events.addUserToEvent, args = 'id -> "AddUserToEventForm") {
+
+@inputText(
+field = userForm("username"),
+args = '_label -> "Username", 'placeholder -> "Anonymous"
+)
+
+@inputText(
+field = userForm("eventhost"),
+args = '_label -> "EventHost", 'placeholder -> "Anonymous"
+)
+
+<p class="buttons">
+    <input type="submit">
+<p>
+
+
+    }
+
+
+}

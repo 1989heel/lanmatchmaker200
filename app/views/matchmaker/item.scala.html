@@ -1,0 +1,12 @@
+@(matchmaker: Matchmaker, notAddedUsers: Set[Profile])
+
+@matchmaker.getType()
+@matchmaker.value
+
+<h3>Added users:</h3>
+@views.html.profile.list.render(matchmaker.users)
+
+<a href="@routes.Matchmakers.matchmake(matchmaker.getId())" class="btn">Matchmake</a>
+	
+<h3>Not added users:</h3>
+@views.html.profile.matchmakerUserList.render(matchmaker, notAddedUsers)

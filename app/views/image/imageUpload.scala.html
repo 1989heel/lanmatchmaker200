@@ -1,0 +1,17 @@
+@import helper._
+
+@main {
+    <h1>Ladda upp en profilbild</h1>
+		
+ @form(action = routes.Upload.upload, 'enctype -> "multipart/form-data") {
+    
+    <input type="file" name="picture">
+    
+    <p>
+        <input type="submit" value="Ladda bild" class="btn primary"> eller 
+            <a href="@routes.Profiles.profile(session().get("username"))" class="btn primary">Avbryt</a> 
+    </p>
+    
+}
+    
+}

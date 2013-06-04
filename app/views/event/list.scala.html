@@ -1,0 +1,109 @@
+@(eventPage: com.avaje.ebean.Page[Event], eventSortBy: String, eventOrder: String)
+
+@link(newPage:Int, newEventSortBy:String) = @{
+
+var eventsortBy = eventSortBy
+var eventorder = eventOrder
+
+if(newEventSortBy != null) {
+eventsortBy = newEventSortBy
+if(eventSortBy == newEventSortBy) {
+if(eventOrder == "asc") {
+eventorder = "desc"
+} else {
+eventorder = "asc"
+}
+} else {
+eventorder = "asc"
+}
+}
+
+
+
+routes.Events.list(newPage, eventsortBy, eventorder)
+
+}
+
+@header(key:String, title:String) = {
+<th class="@key.replace(".","_") header @if(eventSortBy == key) @{if(eventOrder == "asc") "headerSortDown" else "headerSortUp"}">
+<a href="@link(0, key)">@title</a>
+</th>
+}
+
+@main {
+
+<h4 id="homeTitle">@Messages("Events:", eventPage.getTotalRowCount)</h4>
+
+
+
+@if(eventPage.getTotalRowCount == 0) {
+
+<div class="well">
+    <em>Inga events tillgängliga.</em>
+</div>
+
+} else {
+<table class="table table-condensed">
+    <thead>
+    <tr>
+        @header("name", "Namn")
+        @header("location", "Plats")
+        @header("fee", "Avgift")
+        @header("start", "Börjar")
+        @header("end", "Slutar")
+    </tr>
+    </thead>
+    <tbody>
+
+    @for(event <- eventPage.getList) {
+    <tr>
+        <td><a href="@routes.Events.showEvent(event.host)">@event.name</a></td>
+        <td>@event.location</td>
+        <td>@event.fee</td>
+        <td>
+            @if(event.start == null) {
+            <em>Ej angivet</em>
+            } else {
+            @event.start.format("dd MMM yyyy")
+            }
+        </td>
+        <td>
+            @if(event.end == null) {
+            <em>Ej angivet</em>
+            } else {
+            @event.end.format("dd MMM yyyy")
+            }
+        </td>
+    </tr>
+    }
+
+    </tbody>
+</table>
+
+<div id="pagination" class="pagination">
+    <ul>
+        @if(eventPage.hasPrev) {
+        <li class="prev">
+            <a href="@link(eventPage.getPageIndex - 1, null)">&larr; Föregående</a>
+        </li>
+        } else {
+        <li class="prev disabled">
+            <a>&larr; Föregående</a>
+        </li>
+        }
+        <li class="current">
+            <a>Visar @eventPage.getDisplayXtoYofZ(" till "," av ")</a>
+        </li>
+        @if(eventPage.hasNext) {
+        <li class="next">
+            <a href="@link(eventPage.getPageIndex + 1, null)">Nästa &rarr;</a>
+        </li>
+        } else {
+        <li class="next disabled">
+            <a>Nästa &rarr;</a>
+        </li>
+        }
+    </ul>
+</div>
+
+}}

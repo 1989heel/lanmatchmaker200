@@ -1,0 +1,11 @@
+@(profiles: Set[Profile])
+
+<ul>
+@if(profiles != null) {
+	@profiles.map { profile =>
+		<li>
+			@profile.username
+		</li>
+	}
+}
+</ul>

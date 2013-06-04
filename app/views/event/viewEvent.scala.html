@@ -1,0 +1,134 @@
+@(event: Event)
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+@main {
+		<div class="row" style="margin-left: -30px;"> <!--Header-->
+			<div class="span7" style="padding-top: 20px; padding-bottom: 20px; padding-right: 10px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+			background-image:-moz-linear-gradient(top,rgb(93, 56, 134),rgb(48, 0, 121));
+			background-image:-webkit-gradient(linear,0 0,0 100%,from(rgb(93, 56, 134)),to (rgb(48, 0, 121)));
+			background-image:-webkit-linear-gradient(top,rgb(93, 56, 134),rgb(48, 0, 121));
+			background-image:-o-linear-gradient(top,rgb(93, 56, 134),rgb(48, 0, 121));
+			background-image:linear-gradient(to bottom,rgb(93, 56, 134),rgb(48, 0, 121));">
+			
+				<div class="span2" style="margin-right: -22px; margin-left: 20px;">
+					<img class="img-polaroid" src="/assets/images/@event.picture" width="150" height="100">
+					<br>
+					@if(event.owner.equalsIgnoreCase(session.get("username"))){
+					<center><a href="@routes.Events.imageUpload(event.host)" style="color: rgb(148, 130, 185); margin-left: -10px;">Ladda upp bild</a></center>}
+				</div>
+							
+				<div class="span3">
+					<br>
+					<h3 style="line-height: 10px; color: #fff;">@event.name</h3> 
+					<h5 style="line-height: 10px; color: #fff;"><i class="icon-map-marker icon-white"></i>@event.location</h5> 
+					<p style="color: #fff;">
+					Värd: @event.owner
+					<br>
+					Biljettkostnad: @event.fee
+					</p>
+					<p style="color: #fff;">
+					Start: @if(event.start != null){@event.start.toLocaleString} else { obestämt }
+					<br>
+                    Slut: @if(event.end != null){@event.end.toLocaleString} else { obestämt }
+					</p>
+				</div>
+						
+				<div class="span2" style="float: right; margin-right: -20px;">
+					@if(!event.participants.contains(User.find.byId(session().get("username")))){
+						<a href="@routes.Events.joinEvent(event.host)" class="btn">Klicka för att delta</a>
+					}	
+					@if(event.participants.contains(User.find.byId(session().get("username")))){
+						<a href="@routes.Events.exitEvent(event.host)" class="btn">Klicka för att gå ur</a>
+					}					
+				</div>				
+				
+			</div>
+		</div>
+		@if(event.owner.equalsIgnoreCase(session.get("username"))){
+			<a href="@routes.Events.editEvent(event.host)" style="float: right;">Redigera event</a>
+		}
+		
+		<div class="span7" style="margin-left: 5px; margin-top: 10px;"> <!--Body-->
+		
+			<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#lA" data-toggle="tab">Om eventet</a></li>
+	<li><a href="#lB" data-toggle="tab">Chatt</a></li>
+	<li><a href="#lC" data-toggle="tab">Streams</a></li>
+	
+  </ul>
+		
+			</div>
+			
+		<div class="tab-content">
+	<div class="tab-pane active" id="lA"> <!--tab Om eventet-->
+	
+	
+		
+			<div class="span2" style="margin-left: -30px;"> <!--Left part of the body-->
+				<div class="span2" style="border: 1px solid #ddd; padding-left: 15px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;"> <!--Games field-->
+					<h5>Turneringar </h5> <a href="">Spel</a>, <a href="">Spel</a>, <a href="">Spel</a>, <a href="">Spel</a>, <a href="">Spel</a>, <a href="">Spel</a>, <a href="">Spel</a>, <a href="">Spel</a>, <a href="">Spel</a>, <a href="">Spel</a>, <a href="">Spel</a>, <a href="">Spel</a>, 
+					<br><br>
+				</div>
+				<br>
+				<div class="span2" style="border: 1px solid #ddd; margin-top: 10px; padding-left: 15px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;"> <!--Friends field-->
+					<h5>Deltagare </h5>
+					<ul class ="thumbnails" style="padding-left: 20px;">
+						@for(member <- event.participants) {
+							<li class ="thumbnails" style="margin-bottom: 5px; margin-left: 5px;">						
+								<a href="@routes.Profiles.profile(member.username)" class="thumbnail">
+							
+						<img src="/assets/images/@Profile.find.where().eq("username", member.getUserName()).findUnique().picture" width="50" height="50">
+										
+									
+								</a>
+							</li>
+						}
+					</ul>
+				</div>
+			</div>
+			
+			<div class="span4" style="margin-left: 30px;"> <!--Right part of the body-->
+				<div class="span4" style="margin-right: -30px; margin-left: 25px; padding-left: 15px; border: 1px solid #ddd; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; padding-right: -50px;">
+					<h5>Om eventet</h5>
+						<p>@event.info</p>
+					<br>
+				</div>
+			</div>
+	
+	</div> <!-- slut på tab om event-->
+	
+	<div class="tab-pane" id="lB"> <!--tab Chatt-->
+	
+	<div class="span7" style="margin-left: -20px; padding-left: 20px;"> 
+	@if(session().get("username") != null) {
+            @if(event.participantsContains(session().get("username"))){
+            <iframe src=@routes.Chat.chatRoom(event.host) height="310"
+                    width="554" scrolling="no"> </iframe>
+					
+            } else { 
+				<p> Du måste vara med i eventet för att se chatten.</p>
+			}
+    }
+	</div>
+	
+	</div> <!-- slut på tab Chatt-->
+	
+	
+	<div class="tab-pane" id="lC"> <!--tab Stream-->
+	
+	<div class="span7" style="margin-left: -20px; padding-left: 20px;">
+	
+	<object type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=@event.streamUsername" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=@event.streamUsername&auto_play=true&start_volume=25" /></object><a href="http://www.twitch.tv/@event.streamUsername" class="trk" style="padding:2px 0px 4px; display:block; width:345px; font-weight:normal; font-size:10px; text-decoration:underline; text-align:center;">Watch live video from @event.streamUsername on www.twitch.tv</a>
+	
+	
+	</div>
+	
+	</div> <!-- slut på tab Stream-->
+		</div>
+		
+		</div>
+}

@@ -1,0 +1,9 @@
+@(userProfile: Profile)
+
+<ul>
+@if(userProfile != null) {
+	<li>
+		@userProfile.username
+	</li>
+}
+</ul>

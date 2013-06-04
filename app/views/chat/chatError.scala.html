@@ -1,0 +1,13 @@
+
+<head> 
+<title> Chat Error </title>
+ <link rel="stylesheet" href="@routes.Assets.at("stylesheets/chatBootstrap.css")">
+</head>
+    @if(flash.containsKey("error")) {        
+        <div class="alert-message error">
+            <p>
+                @flash.get("error")
+            </p>
+        </div>
+    }
+  
